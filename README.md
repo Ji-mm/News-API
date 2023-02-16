@@ -1,0 +1,1 @@
+# This program requests for news content and sends it to an email
