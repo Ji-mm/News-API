@@ -1,14 +1,9 @@
-import os
 import smtplib
 import ssl
 import requests
 
-topic = "samsung"
 api_key = "c9d7096f94d24761a072b21755b909e9"
-url = "https://newsapi.org/v2/everything?" \
-      f"q={topic}&from=2023-01-03&sortBy=publishedAt&" \
-      "apiKey=c9d7096f94d24761a072b21755b909e9&" \
-      "language=en"
+url = f"https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey={api_key}"
 
 # Make request
 request = requests.get(url)
@@ -16,13 +11,12 @@ contents = request.json()
 
 
 # Access the article titles and description
-
 def send_mail(message):
     host = "smtp.gmail.com"
     port = 465
 
     username = "jim.otieno.09@gmail.com"
-    password = os.getenv("PASSWORD")
+    password = "hqroyqomrrfrxjhy"
 
     receiver = "jim.otieno.09@gmail.com"
     context = ssl.create_default_context()
@@ -32,8 +26,9 @@ def send_mail(message):
         server.sendmail(username, receiver, message)
 
 
+# Write email content and format
 content_ = "Subject: Today in the tech world"
-for content in contents["articles"][:20]:
+for content in contents["articles"][:50]:
     content_ += "\n" + str(content["title"]) \
                 + "\n" + str(content["description"]) \
                 + "\n" + str(content["url"]) + 2 * "\n"
